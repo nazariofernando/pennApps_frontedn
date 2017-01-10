@@ -1,0 +1,24 @@
+<div class="alpha-morphs">
+	<div class="about-project container">
+		<h3>{{title}}</h3>
+		<h4>Our first project. We need to write a Text here</h4>
+	</div>
+	<div class="modifiers row">
+		<div class="parameters container col s6">
+			<form>
+				<div class="row" *ngFor="let parameter of parameters">
+					<p class="range-field col s10">
+						<label>{{parameter.name}}</label>
+						<input type="range" min="0" max="100" name="value" />
+				    </p>
+				    <div class="container col s2">
+				    	<input [(ngModel)] = "parameter.value" type="number" name="value">
+				    </div>
+			    </div>
+			</form>
+		</div>
+		<div class="glider-img container col s6">
+			<canvas class="container" style="border: 1px solid black"></canvas>
+		</div>
+	</div>
+</div>
