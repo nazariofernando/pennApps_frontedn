@@ -12,11 +12,13 @@ export class AlphaMorphsComponent {
 	parameters = [
 		{
 			name: "Parameter 1",
-			value: 0
+			value: 0,
+			valueName: "1"
 		},
 		{
 			name: "Parameter 2",
-			value: 0
+			value: 0,
+			valueName: "2"
 		}
 	]
 

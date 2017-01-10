@@ -1,0 +1,16 @@
+.about-us {  }
+	.about-us h3 {
+		text-align: center;
+	}
+	.team { 
+		text-align: center;
+	}
+		.team img {
+			height: 150px;
+			width: 150px;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			
+			border-radius: 100%;
+		}

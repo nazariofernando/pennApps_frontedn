@@ -1,0 +1,44 @@
+<div class="contact-us">
+	<h4 style="text-align: center;">Contact Us</h4>
+	<div class="row">
+	    <form class="col s12">
+	      <div class="row">
+	        <div class="input-field col s6">
+	          <i class="material-icons prefix">account_circle</i>
+	          <input [(ngModel)] = "name" name="name" id="icon_prefix" type="text" class="validate">
+	          <label for="icon_prefix">Name</label>
+	        </div>
+	        <div class="input-field col s6">
+	          <i class="material-icons prefix">phone</i>
+	          <input [(ngModel)] = "phone" name="phone" id="icon_telephone" type="tel" class="validate">
+	          <label for="icon_telephone">Telephone</label>
+	        </div>
+	      </div>
+	      <div class="row">
+	      	<div class="input-field col s6">
+	      		<i class="material-icons prefix">email</i>
+	          	<input [(ngModel)] = "email" name="email" id="icon_email" type="email" class="validate">
+	          	<label for="icon_email">Email</label>
+	      	</div>
+	      	<div class="col s6">
+	      		<div class="input-field col s12">
+		      		<i class="material-icons prefix">subject</i>
+				    <select id="icon_subject">
+				      <option value="" disabled selected>Choose your option</option>
+				      <option *ngFor="let subject of subjects" value="{{subject.val}}">{{subject.name}}</option>
+				    </select>
+				    <label for="icon_subject">Subjects</label>
+			  </div>
+	      	</div>
+	      	<div class="row">
+			    <div class="input-field col s12">
+			        <i class="material-icons prefix">mode_edit</i>
+			        <textarea [(ngModel)] = "text" name="text" id="icon_prefix2" class="materialize-textarea"></textarea>
+			        <label for="icon_prefix2">Text</label>
+			    </div>
+	      	</div>
+	      </div>
+	      <button class="waves-effect waves-light btn">Send Email</button>
+	    </form>
+  </div>
+</div>

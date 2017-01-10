@@ -1,0 +1,11 @@
+<div class="about-us container">
+	<h3>{{aboutCompany}}</h3>
+	<div class="team row">
+		<div class="container col s4" *ngFor="let info of infos">
+			<img [src]="info.pic">
+			<h4>{{info.name}}</h4>
+			<p>{{info.about}}</p>
+		</div>
+	</div>
+	<contact-us></contact-us>
+</div>

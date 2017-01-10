@@ -9,12 +9,13 @@
 				<div class="row" *ngFor="let parameter of parameters">
 					<p class="range-field col s10">
 						<label>{{parameter.name}}</label>
-						<input type="range" min="0" max="100" name="value" />
+						<input [(ngModel)] = "parameter.value" type="range" min="0" max="100" name="{{parameter.valueName}}" />
 				    </p>
 				    <div class="container col s2">
-				    	<input [(ngModel)] = "parameter.value" type="number" name="value">
+				    	<input [(ngModel)] = "parameter.value" type="number" name="{{parameter.valueName}}">
 				    </div>
 			    </div>
+			    <button class="waves-effect waves-light btn">Create Glider</button>
 			</form>
 		</div>
 		<div class="glider-img container col s6">
