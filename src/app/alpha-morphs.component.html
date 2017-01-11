@@ -1,17 +1,25 @@
 <div class="alpha-morphs">
 	<div class="about-project container">
-		<h3>{{title}}</h3>
-		<h4>Our first project. We need to write a Text here</h4>
+		<h4>{{title}}</h4>
+		<div id="helper">Darwin Design's proof of concept application is a revolutionary new way to design the best gliders.</div>
+
+		<div class="title">How does it work?</div>
+		<div class="helper">Simply enter some basic information about the
+			glider in the form below, and Alpha Morph will use genetic algorithms
+			backed up with mathematical evidence from various sources, including
+			NASA, Princeton University, and a well-reputed glider simulator, 
+			to generate the most optimal glider.
+		</div>
 	</div>
-	<div class="modifiers row">
+	<div class="modifiers row container">
 		<div class="parameters container col s6">
 			<form>
 				<div class="row" *ngFor="let parameter of parameters">
 					<p class="range-field col s10">
 						<label>{{parameter.name}}</label>
-						<input [(ngModel)] = "parameter.value" type="range" min="0" max="100" name="{{parameter.valueName}}" />
+						<input [(ngModel)] = "parameter.value" id="{{parameter.valueName}}" type="range" min="{{parameter.min}}" max="{{parameter.max}}" step="{{parameter.step}}" name="{{parameter.valueName}}" />
 				    </p>
-				    <div class="container col s2">
+				    <div class="container col s2" style="margin-top: 9px;">
 				    	<input [(ngModel)] = "parameter.value" type="number" name="{{parameter.valueName}}">
 				    </div>
 			    </div>
@@ -20,6 +28,13 @@
 		</div>
 		<div class="glider-img container col s6">
 			<canvas class="container" style="border: 1px solid black"></canvas>
+			<div>
+				<b>Live Diagram of the Glider</b><br>
+				Red symbolizes the wings<br>
+				Green symbolizes the stabilizer<br>
+				Blue symbolizes the vertical tail<br>
+				Black symbolizes the fuselage
+			</div>
 		</div>
 	</div>
 </div>

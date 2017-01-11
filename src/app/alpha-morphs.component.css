@@ -1,7 +1,27 @@
-.alpha-morphs {  }
-	.alpha-morphs div {
-		margin-top: 10px;
-		text-align: center;
-	}
+.alpha-morphs > .about-project { 
+	margin-top: 50px;
+	margin-bottom: 30px;
+}
 
-.modifiers {  }
+.alpha-morphs > .about-project > div#helper {
+	font-size: 20px;
+	margin-bottom: 80px;
+}
+
+.alpha-morphs > .about-project > div#helper, .alpha-morphs > .about-project > h4 {
+	text-align: center;
+}
+
+.alpha-morphs > .about-project > div.title {
+	font-size: 28px;
+}
+
+.glider-img > canvas {
+	margin-top: 15px;
+	width: 100%;
+	height: 300px;
+}
+
+.glider-img {
+	position: relative;
+}
