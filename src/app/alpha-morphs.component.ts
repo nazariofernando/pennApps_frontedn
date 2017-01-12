@@ -1,4 +1,5 @@
 import {Component, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
+var evaluation = require('../assets/evaluation.js');
 declare var $:any;
 
 @Component({
@@ -17,6 +18,22 @@ export class AlphaMorphsComponent {
 			min: 18,
 			max: 27,
 			valueName: "lengthFuselage"
+		},
+		{
+			name: "Fuselage Width",
+			value: 0.05,
+			min: 0.05,
+			max: 0.5,
+			step: 0.05,
+			valueName: "widthFuselage"
+		},
+		{
+			name: "Fuselage Depth",
+			value: 0,
+			min: 0,
+			max: 1,
+			step: 0.1,
+			valueName: "depthFuselage"
 		},
 		{
 			name: "Wing Distance from Nose",
@@ -133,6 +150,22 @@ export class AlphaMorphsComponent {
 			max: 30,
 			valueName: "angleVert"
 		},
+		{
+			name: "Wing Thickness",
+			value: 0,
+			min: 0,
+			max: 1.5,
+			step: 0.1,
+			valueName: "thicknessWing"
+		},
+		{
+			name: "Wing Density",
+			value: 0,
+			min: 0,
+			max: 1,
+			step: 0.1,
+			valueName: "densityWing"
+		},
 	]
 
 }
@@ -140,86 +173,134 @@ export class AlphaMorphsComponent {
 // GENERATING CANVAS
 
 $(document).ready(function() {
+	var name = "1";
 	var canvas = $(".glider-img > canvas")[0];
 	var context = canvas.getContext('2d');
 
-	updateCanvas(context);
+	updateCanvas(context, name);
 
 	$("input").change(function() {
 		context.clearRect(0, 0, canvas.width, canvas.height);
-		updateCanvas(context);
+		updateCanvas(context, name);
+	})
+
+	$("#saveImg > .button").click(function() {
+		var img = canvas.toDataURL("image/png");
+		window.open(img);
+		var a = document.createElement('a');
+		a.href = img;
+		a.download = 'image.png';
+
+		a.click();
 	})
 });
 
-function updateCanvas(c) {
-	var lengthFuselage = $("#lengthFuselage").val() * 10;
+function updateCanvas(c, name) {
+	var lengthFuselage = $("#lengthFuselage").val(),
+		locationWing = $("#locationWing").val(),
+		locationStab = $("#locationStab").val(),
+		locationVert = $("#locationVert").val(),
+		massNose = $("#massNose").val(),
+		spanWing = $("#spanWing").val(),
+		spanWing = $("#spanWing").val(),
+		crWing = $("#crWing").val(),
+		trWing = $("#trWing").val(),
+		angleWing = $("#angleWing").val(),
+		spanStab = $("#spanStab").val(),
+		crStab = $("#crStab").val(),
+		trStab = $("#trStab").val(),
+		angleStab = $("#angleStab").val(),
+		spanVert = $("#spanVert").val(),
+		crVert = $("#crVert").val(),
+		trVert = $("#trVert").val(),
+		angleVert = $("#angleVert").val(),
+		thicknessWing = $("#thicknessWing").val(),
+		densityWing = $("#densityWing").val(),
+		widthFuselage = $("#widthFuselage").val(),
+		depthFuselage = $("#depthFuselage").val();
+
+	var gliderInfo = ["1", 0, lengthFuselage, locationWing, locationStab, 					  locationVert, massNose, 20, spanWing, crWing, trWing, angleWing, 0, spanStab, crStab, trStab, angleStab, 0, spanVert, crVert, trVert, angleVert, 0, "", "3/16x3/8x36 spruce, 1/8x4x48 balsa", 121.92, 10.16, thicknessWing, densityWing, 91.44, 0.01666, widthFuselage, depthFuselage, 30, 5.7, 1.22];
+
+	var flyability = Math.round(evaluation.analyze(gliderInfo)),
+		leftOffset = 13,
+		midHeight = c.canvas.height / 2,
+		scale = 13;
+
+	lengthFuselage = lengthFuselage * scale;
+	widthFuselage = widthFuselage * scale;	
+
 	c.fillStyle = '#000';
+	c.lineWidth = 1;
 	c.beginPath();
-	c.moveTo(13, 70);
-	c.lineTo(13 + lengthFuselage, 70);
-	c.lineTo(13 + lengthFuselage, 75);
-	c.lineTo(13, 75);
+	c.moveTo(leftOffset, midHeight - widthFuselage);
+	c.lineTo(leftOffset + lengthFuselage, midHeight - widthFuselage);
+	c.lineTo(leftOffset + lengthFuselage, midHeight + widthFuselage);
+	c.lineTo(leftOffset, midHeight + widthFuselage);
 	c.closePath();
 	c.stroke();
 
-
-	var locationWing = $("#locationWing").val() * 10,
-		spanWing = $("#spanWing").val() * 5,
-		crWing = $("#crWing").val() * 10,
-		trWing = $("#trWing").val(),
-		angleWing = $("#angleWing").val() * Math.PI / 180,
-		ctWing = trWing * crWing;
+	locationWing = locationWing * scale;
+	spanWing = spanWing * scale / 2;
+	crWing = crWing * scale;
+	trWing = trWing;
+	angleWing = angleWing * Math.PI / 180;
+	var ctWing = trWing * crWing;
 
 	c.fillStyle = '#f00';
 	c.beginPath();
-	c.moveTo(13 + locationWing, 75);
-	c.lineTo(13 + locationWing + crWing, 75);
-	c.lineTo(13 + locationWing + crWing + spanWing * Math.tan(angleWing), 75 + spanWing);
-	c.lineTo(13 + locationWing + crWing + spanWing * Math.tan(angleWing) - ctWing, 75 + spanWing);
+	c.moveTo(leftOffset + locationWing, midHeight + widthFuselage);
+	c.lineTo(leftOffset + locationWing + crWing, midHeight + widthFuselage);
+	c.lineTo(leftOffset + locationWing + crWing + spanWing * Math.tan(angleWing), midHeight + widthFuselage + spanWing);
+	c.lineTo(leftOffset + locationWing + crWing + spanWing * Math.tan(angleWing) - ctWing, midHeight + widthFuselage + spanWing);
 	c.closePath();
 	c.fill();
 	c.beginPath();
-	c.moveTo(13 + locationWing, 70);
-	c.lineTo(13 + locationWing + crWing, 70);
-	c.lineTo(13 + locationWing + crWing + spanWing * Math.tan(angleWing), 70 - spanWing);
-	c.lineTo(13 + locationWing + crWing + spanWing * Math.tan(angleWing) - ctWing, 70 - spanWing);
+	c.moveTo(leftOffset + locationWing, midHeight - widthFuselage);
+	c.lineTo(leftOffset + locationWing + crWing, midHeight - widthFuselage);
+	c.lineTo(leftOffset + locationWing + crWing + spanWing * Math.tan(angleWing), midHeight - widthFuselage - spanWing);
+	c.lineTo(leftOffset + locationWing + crWing + spanWing * Math.tan(angleWing) - ctWing, midHeight - widthFuselage - spanWing);
 	c.closePath();
 	c.fill();
 
-	var locationStab = $("#locationStab").val() * 10,
-		spanStab = $("#spanStab").val() * 5,
-		crStab = $("#crStab").val() * 10,
-		trStab = $("#trStab").val(),
-		angleStab = $("#angleStab").val() * Math.PI / 180,
-		ctStab = trStab * crStab;
+	locationStab = locationStab * scale;
+	spanStab = spanStab * scale / 2;
+	crStab = crStab * scale;
+	trStab = trStab;
+	angleStab = angleStab * Math.PI / 180;
+	var	ctStab = trStab * crStab;
 
 	c.fillStyle = '#0f0';
 	c.beginPath();
-	c.moveTo(13 + locationStab, 75);
-	c.lineTo(13 + locationStab + crStab, 75);
-	c.lineTo(13 + locationStab + crStab + spanStab * Math.tan(angleStab), 75 + spanStab);
-	c.lineTo(13 + locationStab + crStab + spanStab * Math.tan(angleStab) - ctStab, 75 + spanStab);
+	c.moveTo(leftOffset + locationStab, midHeight + widthFuselage);
+	c.lineTo(leftOffset + locationStab + crStab, midHeight + widthFuselage);
+	c.lineTo(leftOffset + locationStab + crStab + spanStab * Math.tan(angleStab), midHeight + widthFuselage + spanStab);
+	c.lineTo(leftOffset + locationStab + crStab + spanStab * Math.tan(angleStab) - ctStab, midHeight + widthFuselage + spanStab);
 	c.closePath();
 	c.fill();
 	c.beginPath();
-	c.moveTo(13 + locationStab, 70);
-	c.lineTo(13 + locationStab + crStab, 70);
-	c.lineTo(13 + locationStab + crStab + spanStab * Math.tan(angleStab), 70 - spanStab);
-	c.lineTo(13 + locationStab + crStab + spanStab * Math.tan(angleStab) - ctStab, 70 - spanStab);
+	c.moveTo(leftOffset + locationStab, midHeight - widthFuselage);
+	c.lineTo(leftOffset + locationStab + crStab, midHeight - widthFuselage);
+	c.lineTo(leftOffset + locationStab + crStab + spanStab * Math.tan(angleStab), midHeight - widthFuselage - spanStab);
+	c.lineTo(leftOffset + locationStab + crStab + spanStab * Math.tan(angleStab) - ctStab, midHeight - widthFuselage - spanStab);
 	c.closePath();
 	c.fill();
 
-	var locationVert = $("#locationVert").val() * 10,
-		crVert = $("#crVert").val() * 10;
+	locationVert = locationVert * scale;
+	crVert = crVert * scale;
 
 	c.fillStyle = '#0ff';
 	c.beginPath();
-	c.moveTo(13 + locationVert, 71);
-	c.lineTo(13 + locationVert + crVert, 71);
-	c.lineTo(13 + locationVert + crVert, 74);
-	c.lineTo(13 + locationVert, 74);
+	c.moveTo(leftOffset + locationVert, midHeight - widthFuselage);
+	c.lineTo(leftOffset + locationVert + crVert, midHeight - widthFuselage);
+	c.lineTo(leftOffset + locationVert + crVert, midHeight + widthFuselage);
+	c.lineTo(leftOffset + locationVert, midHeight + widthFuselage);
 	c.closePath();
 	c.fill();
+
+	c.font = "16px Arial";
+	c.fillStyle = '#000';
+	c.fillText("Species Name: " + name, leftOffset, 20.5);
+	c.fillText("Flyability: " + flyability, leftOffset, 40.5);
 }
 
 
@@ -240,13 +321,32 @@ function getScrollTop() {
 
     // IE in quirks mode
     return document.body.scrollTop;
-  }
+}
 
-$(window).scroll(function() {
+function handleScroll() {
 	if (getScrollTop() > 375) {
-		$(".glider-img").css("top", (getScrollTop() - 375 ) + "px");
+		var newWidth = $(".parameters").outerWidth() + "px";
+		$(".glider-img").css({
+			"position": "fixed",
+			"top": "10px",
+			"width": newWidth,
+			"transform": "translateX(" + newWidth + ")"
+		});
 	}
 	else {
-		$(".glider-img").css("top", "0px");
+		$(".glider-img").css({
+			"position": "relative",
+			"transform": "none",
+			"top": "auto",
+			"left": "auto"
+		});
 	}
+}
+
+var scrollTimer = null;
+$(window).scroll(function() {
+	if (scrollTimer) {
+		clearTimeout(scrollTimer);
+	}
+	scrollTimer = setTimeout(handleScroll(), 1000);
 })

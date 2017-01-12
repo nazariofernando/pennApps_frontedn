@@ -17,11 +17,20 @@
 }
 
 .glider-img > canvas {
-	margin-top: 15px;
 	width: 100%;
-	height: 300px;
+	margin-top: 15px;
+	border: 1px solid black;
 }
 
-.glider-img {
-	position: relative;
+#saveImg, #caption {
+	float: left;
+	width: 50%;
+}
+
+#saveImg > .button {
+	background-color: #CCC;
+	width: 88px;
+	padding: 5px;
+	float: right;
+	cursor: pointer;
 }

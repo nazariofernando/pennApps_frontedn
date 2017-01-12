@@ -5,10 +5,7 @@
 
 		<div class="title">How does it work?</div>
 		<div class="helper">Simply enter some basic information about the
-			glider in the form below, and Alpha Morph will use genetic algorithms
-			backed up with mathematical evidence from various sources, including
-			NASA, Princeton University, and a well-reputed glider simulator, 
-			to generate the most optimal glider.
+			glider in the form below. This is an app developed by the Alpha Morph team which combines simulated evolution by natural selection with a model glider flight evaluation algorithm to evolve the best possible gliders within set given parameters.
 		</div>
 	</div>
 	<div class="modifiers row container">
@@ -27,13 +24,16 @@
 			</form>
 		</div>
 		<div class="glider-img container col s6">
-			<canvas class="container" style="border: 1px solid black"></canvas>
-			<div>
+			<canvas class="container" height="300" width="400"></canvas>
+			<div id="caption">
 				<b>Live Diagram of the Glider</b><br>
 				Red symbolizes the wings<br>
 				Green symbolizes the stabilizer<br>
 				Blue symbolizes the vertical tail<br>
 				Black symbolizes the fuselage
+			</div>
+			<div id="saveImg">
+				<div class="button">Save Image</div>
 			</div>
 		</div>
 	</div>
