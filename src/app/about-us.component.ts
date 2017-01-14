@@ -13,7 +13,7 @@ export class AboutUsComponent {
 		{
 			name: "Fernando Nazario",
 			about: "I like Chai",
-			pic: "./fernando_picture.jpg"
+			pic: "./fernando_picture.JPG"
 		},
 		{
 			name: "Jackson Chen",

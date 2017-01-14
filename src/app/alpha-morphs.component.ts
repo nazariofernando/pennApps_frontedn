@@ -23,10 +23,14 @@ export class AlphaMorphsComponent {
 	generations = 0;
 	parameters = PARAMS;
 
-	best: FirebaseListObservable<any>;
+	best = {}
+	keys = []
+	place = []
 	constructor(private alphaMorphService: AlphaMorphService, private af: AngularFire) { };
 
 	conditional = false
+
+	currentGlider = {}
 
 	createGlider(): void {
 		
@@ -53,13 +57,25 @@ export class AlphaMorphsComponent {
 
 		this.alphaMorphService.createGlider(name, params, numberGen)
 
-		this.best = this.af.database.list('/' + name + '/greatestGlider')
+		this.af.database.object('/' + name + '/0', { preserveSnapshot: true })
+			.subscribe(snapshot => {
+			  this.currentGlider = snapshot.val().params
+			});
+		
 
-		this.best.subscribe(snapshots => {
-			if(snapshots.length > 0){
-				this.conditional = true
+		for(let i = 1; i <= numberGen; i++){
+			for(let j = 0; j < 50; j++){
+				let mutateGlider = this.alphaMorphService.mutateGlider(this.currentGlider)
+				this.af.database.object('/' + name + '/' + i + '/' + j).set(mutateGlider)
+				if(mutateGlider["aery"] > this.currentGlider["aery"]){
+					this.currentGlider = mutateGlider
+					this.place = [i, j]
+				}
 			}
-		})
+		}
+
+		this.best = this.currentGlider 
+		this.keys = Object.keys(this.best)
 
 	}
 

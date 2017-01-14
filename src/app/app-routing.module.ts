@@ -11,8 +11,8 @@ import { AboutUsComponent }       from './about-us.component';
 
 //routes
 const routes: Routes = [
-	{ path: '', redirectTo: '/alphaMorphs', pathMatch: 'full' },
-	{ path: 'alphaMorphs', component: AlphaMorphsComponent },
+	{ path: '', redirectTo: '/alphaMorph', pathMatch: 'full' },
+	{ path: 'alphaMorph', component: AlphaMorphsComponent },
 	{ path: 'aboutUs', component: AboutUsComponent }
 ];
 
