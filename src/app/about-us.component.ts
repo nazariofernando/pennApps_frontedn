@@ -13,17 +13,17 @@ export class AboutUsComponent {
 		{
 			name: "Fernando Nazario",
 			about: "I like Chai",
-			pic: "./img/fernando_picture.JPG"
+			pic: "./fernando_picture.jpg"
 		},
 		{
 			name: "Jackson Chen",
 			about: "I like Code",
-			pic: "./img/jackson_picture.jpg"
+			pic: "./jackson_picture.jpg"
 		},
 		{
 			name: "Matthew Barad",
 			about: "I like Suicidal Memes",
-			pic: "./img/matthew_picture.jpg"
+			pic: "./matthew_picture.jpg"
 		}
 	];
 

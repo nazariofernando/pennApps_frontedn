@@ -1,6 +1,14 @@
-import {Component, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+
+import { AlphaMorphService } from './alpha-morphs.service';
+
+import { Param } from "./parameter";
+import { PARAMS } from "./parameters";
+
 var evaluation = require('../assets/evaluation.js');
 declare var $:any;
+
 
 @Component({
 	selector: 'alpha-morphs',
@@ -11,162 +19,49 @@ export class AlphaMorphsComponent {
 
 	title = "Alpha Morph: A Glider Optimization Platform";
 
-	parameters = [
-		{
-			name: "Fuselage Length",
-			value: 18,
-			min: 18,
-			max: 27,
-			valueName: "lengthFuselage"
-		},
-		{
-			name: "Fuselage Width",
-			value: 0.05,
-			min: 0.05,
-			max: 0.5,
-			step: 0.05,
-			valueName: "widthFuselage"
-		},
-		{
-			name: "Fuselage Depth",
-			value: 0,
-			min: 0,
-			max: 1,
-			step: 0.1,
-			valueName: "depthFuselage"
-		},
-		{
-			name: "Wing Distance from Nose",
-			value: 0,
-			min: 0,
-			max: 27,
-			valueName: "locationWing"
-		},
-		{
-			name: "Stabilizer Distance from Nose",
-			value: 0,
-			min: 0,
-			max: 27,
-			valueName: "locationStab"
-		},
-		{
-			name: "Vertical Tail Distance from Nose",
-			value: 0,
-			min: 0,
-			max: 27,
-			valueName: "locationVert"
-		},
-		{
-			name: "Mass of Nose",
-			value: 0,
-			min: 0,
-			max: 30,
-			valueName: "massNose"
-		},
-		{
-			name: "Wing Span",
-			value: 1,
-			min: 1,
-			max: 27,
-			valueName: "spanWing"
-		},
-		{
-			name: "Wing Root Chord",
-			value: 1,
-			min: 1,
-			max: 10,
-			valueName: "crWing"
-		},
-		{
-			name: "Wing Taper Ratio",
-			value: 0.4,
-			min: 0.4,
-			max: 1,
-			step: 0.1,
-			valueName: "trWing"
-		},
-		{
-			name: "Wing Leading Edge Angle",
-			value: 0,
-			min: 0,
-			max: 30,
-			valueName: "angleWing"
-		},
-		{
-			name: "Stabilizer Span",
-			value: 1,
-			min: 1,
-			max: 27,
-			valueName: "spanStab"
-		},
-		{
-			name: "Stabilizer Root Chord",
-			value: 1,
-			min: 1,
-			max: 10,
-			valueName: "crStab"
-		},
-		{
-			name: "Stabilizer Taper Ratio",
-			value: 0.4,
-			min: 0.4,
-			max: 1,
-			step: 0.1,
-			valueName: "trStab"
-		},
-		{
-			name: "Stabilizer Leading Edge Angle",
-			value: 0,
-			min: 0,
-			max: 30,
-			valueName: "angleStab"
-		},
-		{
-			name: "Vertical Tail Height",
-			value: 1,
-			min: 1,
-			max: 27,
-			valueName: "spanVert"
-		},
-		{
-			name: "Vertical Tail Root Chord",
-			value: 1,
-			min: 1,
-			max: 10,
-			valueName: "crVert"
-		},
-		{
-			name: "Vertical Tail Taper Ratio",
-			value: 0.4,
-			min: 0.4,
-			max: 1,
-			step: 0.1,
-			valueName: "trVert"
-		},
-		{
-			name: "Vertical Tail Leading Edge Angle",
-			value: 0,
-			min: 0,
-			max: 30,
-			valueName: "angleVert"
-		},
-		{
-			name: "Wing Thickness",
-			value: 0,
-			min: 0,
-			max: 1.5,
-			step: 0.1,
-			valueName: "thicknessWing"
-		},
-		{
-			name: "Wing Density",
-			value: 0,
-			min: 0,
-			max: 1,
-			step: 0.1,
-			valueName: "densityWing"
-		},
-	]
+	name = "";
+	generations = 0;
+	parameters = PARAMS;
+
+	best: FirebaseListObservable<any>;
+	constructor(private alphaMorphService: AlphaMorphService, private af: AngularFire) { };
+
+	conditional = false
+
+	createGlider(): void {
+		
+		let name = this.name
+		let numberGen = this.generations
+		
+		let params = {}
+		for(let param of this.parameters) {
+			let nameParam = param.name
+			params[nameParam] = param.value
+		}
+
+		params["1 Piece of Wood"] = 0
+		params["Throwing Velocity"] = 20
+		params["Wing Sweep Type"] = 0
+		params["Stabilizer Sweep Type"] = 0
+		params["Vertical Tail Sweep Type"] = 0
+
+		let gliderInfo = ["1",0, this.parameters[0].value, this.parameters[3].value, this.parameters[4].value, this.parameters[5].value, this.parameters[6].value, 20, this.parameters[7].value, this.parameters[8].value, this.parameters[9].value, this.parameters[10].value, 0, this.parameters[11].value, this.parameters[12].value, this.parameters[13].value, this.parameters[14].value, 0, this.parameters[15].value, this.parameters[16].value, this.parameters[17].value, this.parameters[18].value, 0, "", "3/16x3/8x36 spruce, 1/8x4x48 balsa", 121.92, 10.16, this.parameters[19].value, this.parameters[20].value, 91.44, 0.01666, this.parameters[1].value, this.parameters[2].value, 30, 5.7, 1.22];
+
+		let aery = Math.round(evaluation.analyze(gliderInfo))
+
+		params["aery"] = aery
+
+		this.alphaMorphService.createGlider(name, params, numberGen)
+
+		this.best = this.af.database.list('/' + name + '/greatestGlider')
+
+		this.best.subscribe(snapshots => {
+			if(snapshots.length > 0){
+				this.conditional = true
+			}
+		})
+
+	}
 
 }
 
@@ -219,7 +114,7 @@ function updateCanvas(c, name) {
 		widthFuselage = $("#widthFuselage").val(),
 		depthFuselage = $("#depthFuselage").val();
 
-	var gliderInfo = ["1", 0, lengthFuselage, locationWing, locationStab, 					  locationVert, massNose, 20, spanWing, crWing, trWing, angleWing, 0, spanStab, crStab, trStab, angleStab, 0, spanVert, crVert, trVert, angleVert, 0, "", "3/16x3/8x36 spruce, 1/8x4x48 balsa", 121.92, 10.16, thicknessWing, densityWing, 91.44, 0.01666, widthFuselage, depthFuselage, 30, 5.7, 1.22];
+	var gliderInfo = ["1", 0, lengthFuselage, locationWing, locationStab, locationVert, massNose, 20, spanWing, crWing, trWing, angleWing, 0, spanStab, crStab, trStab, angleStab, 0, spanVert, crVert, trVert, angleVert, 0, "", "3/16x3/8x36 spruce, 1/8x4x48 balsa", 121.92, 10.16, thicknessWing, densityWing, 91.44, 0.01666, widthFuselage, depthFuselage, 30, 5.7, 1.22];
 
 	var flyability = Math.round(evaluation.analyze(gliderInfo)),
 		leftOffset = 13,
