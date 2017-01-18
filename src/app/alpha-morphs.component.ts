@@ -31,16 +31,18 @@ export class AlphaMorphsComponent {
 	conditional = false
 
 	currentGlider = {}
+	maxMin = []
 
 	createGlider(): void {
-		
+
 		let name = this.name
 		let numberGen = this.generations
-		
+
 		let params = {}
 		for(let param of this.parameters) {
 			let nameParam = param.name
 			params[nameParam] = param.value
+			this.maxMin.push([param.min, param.max])
 		}
 
 		params["1 Piece of Wood"] = 0
@@ -61,11 +63,12 @@ export class AlphaMorphsComponent {
 			.subscribe(snapshot => {
 			  this.currentGlider = snapshot.val().params
 			});
-		
+
+
 
 		for(let i = 1; i <= numberGen; i++){
 			for(let j = 0; j < 50; j++){
-				let mutateGlider = this.alphaMorphService.mutateGlider(this.currentGlider)
+				let mutateGlider = this.alphaMorphService.mutateGlider(this.currentGlider, this.maxMin)
 				this.af.database.object('/' + name + '/' + i + '/' + j).set(mutateGlider)
 				if(mutateGlider["aery"] > this.currentGlider["aery"]){
 					this.currentGlider = mutateGlider
@@ -74,7 +77,7 @@ export class AlphaMorphsComponent {
 			}
 		}
 
-		this.best = this.currentGlider 
+		this.best = this.currentGlider
 		this.keys = Object.keys(this.best)
 
 	}
@@ -138,7 +141,7 @@ function updateCanvas(c, name) {
 		scale = 13;
 
 	lengthFuselage = lengthFuselage * scale;
-	widthFuselage = widthFuselage * scale;	
+	widthFuselage = widthFuselage * scale;
 
 	c.fillStyle = '#000';
 	c.lineWidth = 1;
