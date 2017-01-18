@@ -17,6 +17,7 @@ import { MyFooterComponent }      from './my-footer.component';
 import { AlphaMorphsComponent }   from './alpha-morphs.component';
 import { AboutUsComponent }       from './about-us.component';
 import { ContactUsComponent }     from './contact-us.component';
+import { LoginComponent }         from './login.component';
 
 //Custom Services
 import { AlphaMorphService }  from './alpha-morphs.service';
@@ -36,7 +37,8 @@ export const firebaseConfig = {
     MyFooterComponent,
     AlphaMorphsComponent,
     AboutUsComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
