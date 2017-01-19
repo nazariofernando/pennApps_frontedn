@@ -11,8 +11,8 @@ export class AlphaMorphService {
 		this.ref = af.database
 	}
 
-	createGlider(name, params, numberOfGen): void {
-		this.ref.object('/' + name + '/0').set({
+	createGlider(name, params, numberOfGen,oe): void {
+		this.ref.object('/' + oe + '/' + name + '/0').set({
 			numberOfGen,
 			params
 		})

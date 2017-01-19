@@ -18,6 +18,8 @@ import { AlphaMorphsComponent }   from './alpha-morphs.component';
 import { AboutUsComponent }       from './about-us.component';
 import { ContactUsComponent }     from './contact-us.component';
 import { LoginComponent }         from './login.component';
+import { OptimizerComponent }     from './optimizer.component';
+import { EvolutionComponent }     from './evolution.component';
 
 //Custom Services
 import { AlphaMorphService }  from './alpha-morphs.service';
@@ -38,7 +40,9 @@ export const firebaseConfig = {
     AlphaMorphsComponent,
     AboutUsComponent,
     ContactUsComponent,
-    LoginComponent
+    LoginComponent,
+    OptimizerComponent,
+    EvolutionComponent
   ],
   imports: [
     BrowserModule,

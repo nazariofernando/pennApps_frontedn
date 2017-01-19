@@ -1,0 +1,68 @@
+	<div class="modifiers row container" id="optimizer">
+		<div class="title">How does it work?</div>
+		<div class="helper">Simply enter some basic information about the
+			glider in the form below. This is an app developed by the AlphaMorph team which combines simulated evolution by natural selection with a model glider flight evaluation algorithm to evolve the best possible gliders within set given parameters.
+		</div>
+		<div class="parameters container col s6">
+			<form>
+				<label>Your name</label>
+				<input [(ngModel)] = "name" type="text" name="name">
+				<label>How many generations?</label>
+				<input [(ngModel)] = "generations" min=0 type="number" name="gen">
+				<div class="row" *ngFor="let parameter of parameters">
+					<p class="range-field col s10">
+						<label>{{parameter.name}}</label>
+						<input [(ngModel)] = "parameter.value" id="{{parameter.valueName}}" type="range" min="{{parameter.min}}" max="{{parameter.max}}" step="{{parameter.step}}" name="{{parameter.valueName}}" />
+				    </p>
+				    <div class="container col s2" style="margin-top: 9px;">
+				    	<input [(ngModel)] = "parameter.value" type="number" name="{{parameter.valueName}}">
+				    </div>
+			    </div>
+			    <a (click) = "createGlider()" class="modal-trigger waves-effect waves-light btn" href="#modal1">Create Glider</a>
+			</form>
+		</div>
+		<div class="glider-img container col s6">
+			<canvas class="container" height="300" width="400"></canvas>
+			<div id="caption">
+				<b>Live Diagram of the Glider</b><br>
+				Red symbolizes the wings<br>
+				Green symbolizes the stabilizer<br>
+				Blue symbolizes the vertical tail<br>
+				Black symbolizes the fuselage
+			</div>
+			<div id="saveImg">
+				<div class="button">Save Image</div>
+			</div>
+			<!-- 
+			<div *ngFor=" let gen of currentSet;  let i = index " >
+				<h6>Generation : {{i}}</h6>
+				<button *ngFor=" let glider of gen; let k = index ">Individual: {{k}}, {{glider}}</button>
+			</div>
+			-->
+		</div>
+	</div>
+	<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+    	<!--
+    	<div *ngIf="!conditional" class="preloader-wrapper big active">
+		    <div class="spinner-layer spinner-blue-only">
+		      <div class="circle-clipper left">
+		        <div class="circle"></div>
+		      </div><div class="gap-patch">
+		        <div class="circle"></div>
+		      </div><div class="circle-clipper right">
+		        <div class="circle"></div>
+		      </div>
+		    </div>
+		</div>
+	  <div *ngIf="conditional">
+		-->
+		  <h5>Generation: {{place[0]}} | Individual: {{place[1]}}</h5>
+	      <p *ngFor="let key of keys ">
+	      	{{ key }} : {{best[key]}}
+	      </p>
+      <!--</div>-->
+    </div>
+    <div class="modal-footer">
+    </div>
+  </div>

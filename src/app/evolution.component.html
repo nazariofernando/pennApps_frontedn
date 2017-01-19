@@ -1,0 +1,50 @@
+	<div class="modifiers row container" id="evolution">
+		<div class="title">How does it work?</div>
+		<div class="helper">Simply enter some basic information about range of values that the glider can taken on in the form below.
+			AlphaMorph's genetic algorithm will take care of the rest and evolve the best possible glider within your given parameters.
+		</div>
+		<div class="parameters container col s6">
+			<form>
+				<label>Your name</label>
+				<input [(ngModel)] = "name" type="text" name="name">
+				<label>How many generations?</label>
+				<input [(ngModel)] = "generations" min=0 type="number" name="gen">
+				<div class="row" *ngFor="let parameter of parameters">
+					<p class="range-field col s10">
+						<label>{{parameter.name}}</label>
+						<input [(ngModel)] = "parameter.value" id="{{parameter.valueName}}" type="range" min="{{parameter.min}}" max="{{parameter.max}}" step="{{parameter.step}}" name="{{parameter.valueName}}" />
+				    </p>
+				    <div class="container col s2" style="margin-top: 9px;">
+				    	<input [(ngModel)] = "parameter.value" type="number" name="{{parameter.valueName}}">
+				    </div>
+			    </div>
+			    <a (click) = "createGlider()" class="modal-trigger waves-effect waves-light btn" href="#modal1">Create Glider</a>
+			</form>
+		</div>
+	</div>
+	<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+    	<!--
+    	<div *ngIf="!conditional" class="preloader-wrapper big active">
+		    <div class="spinner-layer spinner-blue-only">
+		      <div class="circle-clipper left">
+		        <div class="circle"></div>
+		      </div><div class="gap-patch">
+		        <div class="circle"></div>
+		      </div><div class="circle-clipper right">
+		        <div class="circle"></div>
+		      </div>
+		    </div>
+		</div>
+	  <div *ngIf="conditional">
+		-->
+		  <h5>Generation: {{place[0]}} | Individual: {{place[1]}}</h5>
+	      <p *ngFor="let key of keys ">
+	      	{{ key }} : {{best[key]}}
+	      </p>
+      <!--</div>-->
+    </div>
+    <div class="modal-footer">
+    </div>
+  </div>
+
