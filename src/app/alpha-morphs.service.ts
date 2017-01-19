@@ -20,7 +20,7 @@ export class AlphaMorphService {
 
 	//create generate function
 	generateGlider() {
-		
+
 	}
 
 	mutateGlider(params, maxMin) {

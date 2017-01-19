@@ -7,22 +7,38 @@
 			<form>
 				<label>Your name</label>
 				<input [(ngModel)] = "name" type="text" name="name">
-				<label>How many generations?</label>
-				<input [(ngModel)] = "generations" min=0 type="number" name="gen">
+				<div class="row">
+					<div class="col s6">
+						<label>How many generations?</label>
+						<input [(ngModel)] = "generations" min=1 max=200 type="number" name="gen">
+					</div>
+					<div class="col s6">
+						<label>How individuals per generation?</label>
+						<input [(ngModel)] = "individuals" min=1 max=50 type="number" name="ind">
+					</div>
+				</div>
 				<div class="row" *ngFor="let parameter of parameters">
-					<p class="range-field col s10">
+					<div class="col s10">
 						<label>{{parameter.name}}</label>
-						<input [(ngModel)] = "parameter.value" id="{{parameter.valueName}}" type="range" min="{{parameter.min}}" max="{{parameter.max}}" step="{{parameter.step}}" name="{{parameter.valueName}}" />
-				    </p>
+						<p class="range-field">
+							<label>Minimun Value</label>
+							<input [(ngModel)] = "min[parameter.name]" id="{{parameter.valueName}}" type="range" min="{{parameter.min}}" max="{{parameter.max}}" step="{{parameter.step}}" name="{{parameter.valueName}}min" />
+						</p>
+						<p class="range-field">
+							<label>Maximun Value</label>
+							<input [(ngModel)] = "max[parameter.name]" id="{{parameter.valueName}}" type="range" min="{{parameter.min}}" max="{{parameter.max}}" step="{{parameter.step}}" name="{{parameter.valueName}}max" />
+				   		</p>
+				   	</div>
 				    <div class="container col s2" style="margin-top: 9px;">
-				    	<input [(ngModel)] = "parameter.value" type="number" name="{{parameter.valueName}}">
+				    	<input [(ngModel)] = "min[parameter.name]" type="number" name="{{parameter.valueName}}min">
+				    	<input [(ngModel)] = "max[parameter.name]" type="number" name="{{parameter.valueName}}max">
 				    </div>
 			    </div>
-			    <a (click) = "createGlider()" class="modal-trigger waves-effect waves-light btn" href="#modal1">Create Glider</a>
+			    <a (click) = "createGlider()" class="modal-trigger waves-effect waves-light btn" href="#modal2">Create Glider</a>
 			</form>
 		</div>
 	</div>
-	<div id="modal1" class="modal modal-fixed-footer">
+	<div id="modal2" class="modal modal-fixed-footer">
     <div class="modal-content">
     	<!--
     	<div *ngIf="!conditional" class="preloader-wrapper big active">

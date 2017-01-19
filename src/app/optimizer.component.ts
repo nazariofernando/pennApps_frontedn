@@ -18,8 +18,9 @@ export class OptimizerComponent {
 
 	parameters: Param[] = JSON.parse(JSON.stringify(PARAMS))
 
-	name = "";
-	generations = 0;
+	name = ""
+	generations = 1
+	individuals = 1
 
 	best = {}
 	keys = []
@@ -63,7 +64,7 @@ export class OptimizerComponent {
 
 
 		for(let i = 1; i <= numberGen; i++){
-			for(let j = 0; j < 50; j++){
+			for(let j = 0; j < this.individuals; j++){
 				let mutateGlider = this.alphaMorphService.mutateGlider(this.currentGlider, this.maxMin)
 				this.af.database.object('/optimizer/' + name + '/' + i + '/' + j).set(mutateGlider)
 				if(mutateGlider["aery"] > this.currentGlider["aery"]){

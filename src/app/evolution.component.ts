@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ElementRef, OnInit } from "@angular/core";
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 
 import { AlphaMorphService } from './alpha-morphs.service';
@@ -7,6 +7,7 @@ import { Param } from "./parameter";
 import { PARAMS } from "./parameters";
 
 var evaluation = require('../assets/evaluation.js');
+
 declare var $:any;
 
 @Component({
@@ -14,23 +15,37 @@ declare var $:any;
 	templateUrl: './evolution.component.html',
 	styleUrls: [ './evolution.component.css']
 })
-export class EvolutionComponent {
+export class EvolutionComponent implements OnInit {
 
 	parameters: Param[] = JSON.parse(JSON.stringify(PARAMS))
 
 	name = "";
-	generations = 0;
+	generations = 1
+	individuals = 1
 
 	best = {}
 	keys = []
 	place = []
-	constructor(private alphaMorphService: AlphaMorphService, private af: AngularFire) { };
+	constructor(private alphaMorphService: AlphaMorphService, private af: AngularFire, private myElement: ElementRef) { };
 
 	currentGlider = {}
 	maxMin = []
-	currentSet = [];
+	min = {}
+	max = {}
+	currentSet = []
+
+	ngOnInit(){
+		for(let param of this.parameters){
+			this.min[param.name] = param.min
+			this.max[param.name] = param.max
+		}
+	}
 
 	createGlider(): void {
+
+		for(let param of this.parameters){
+			this.maxMin.push([this.min[param.name], this.max[param.name]])
+		}
 
 		let name = this.name
 		let numberGen = this.generations
@@ -63,7 +78,7 @@ export class EvolutionComponent {
 
 
 		for(let i = 1; i <= numberGen; i++){
-			for(let j = 0; j < 50; j++){
+			for(let j = 0; j < this.individuals; j++){
 				let mutateGlider = this.alphaMorphService.mutateGlider(this.currentGlider, this.maxMin)
 				this.af.database.object('/evolution/' + name + '/' + i + '/' + j).set(mutateGlider)
 				if(mutateGlider["aery"] > this.currentGlider["aery"]){
@@ -245,6 +260,8 @@ function getScrollTop() {
     // IE in quirks mode
     return document.body.scrollTop;
 }
+
+
 
 /*
 function handleScroll() {
