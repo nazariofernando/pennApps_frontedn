@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class MyHeaderComponent {
 
-	company = "Darwin Designs";
+	company = "AlphaMorph";
 
 }

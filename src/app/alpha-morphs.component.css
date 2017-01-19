@@ -1,19 +1,49 @@
-.alpha-morphs > .about-project { 
+.alpha-morphs > .about-project {
 	margin-top: 50px;
 	margin-bottom: 30px;
 }
 
 .alpha-morphs > .about-project > div#helper {
 	font-size: 20px;
-	margin-bottom: 80px;
+	margin-bottom: 40px;
 }
 
 .alpha-morphs > .about-project > div#helper, .alpha-morphs > .about-project > h4 {
 	text-align: center;
 }
 
-.alpha-morphs > .about-project > div.title {
+.alpha-morphs > .modifiers > div.title {
 	font-size: 28px;
+}
+
+.alpha-morphs > .modifiers > div.helper {
+	margin-bottom: 30px;
+}
+
+.alpha-morphs > .about-project > .tabs {
+	width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	height: 40px;
+	cursor: pointer;
+}
+
+.alpha-morphs > .about-project > .tabs > .button {
+	border: 1px solid #ee6e73;
+	float: left;
+	width: 299px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+}
+
+.alpha-morphs > .about-project > .tabs > #optimizer {
+	background-color: #ee6e73;
+}
+
+.alpha-morphs > .modifiers#evolution {
+	display: none;
 }
 
 .glider-img > canvas {
