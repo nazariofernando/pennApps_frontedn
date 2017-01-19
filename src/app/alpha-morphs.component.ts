@@ -17,7 +17,7 @@ declare var $:any;
 })
 export class AlphaMorphsComponent {
 
-	title = "Alpha Morph: A Glider Optimization Platform";
+	title = "Alpha Morph: A Glider Evolution Platform";
 
 	name = "";
 	generations = 0;
@@ -102,10 +102,17 @@ $(document).ready(function() {
 
 	updateCanvas(context, name);
 
+	$(".tabs > .button").click(function() {
+		$(this).siblings().css("background-color", "#FFF");
+		$(this).css("background-color", "#ee6e73");
+		$(this).parents().eq(2).find(".modifiers" + "#" + $(this).siblings().attr("id")).hide();
+		$(this).parents().eq(2).find(".modifiers" + "#" + $(this).attr("id")).show();
+	});
+
 	$("input").change(function() {
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		updateCanvas(context, name);
-	})
+	});
 
 	$("#saveImg > .button").click(function() {
 		var img = canvas.toDataURL("image/png");
