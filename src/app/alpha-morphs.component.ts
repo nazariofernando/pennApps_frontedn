@@ -32,6 +32,7 @@ export class AlphaMorphsComponent {
 
 	currentGlider = {}
 	maxMin = []
+	currentSet = [];
 
 	createGlider(): void {
 
@@ -79,6 +80,14 @@ export class AlphaMorphsComponent {
 
 		this.best = this.currentGlider
 		this.keys = Object.keys(this.best)
+		this.af.database.object('/' + name + '/bestGlider').set(this.best)
+
+		this.af.database.list('/' + name, { preserveSnapshot: true })
+			.subscribe(snapshots => {
+				snapshots.forEach(snapshot => {
+					this.currentSet.push(snapshot.val())
+				})
+			})
 
 	}
 
@@ -237,6 +246,7 @@ function getScrollTop() {
     return document.body.scrollTop;
 }
 
+/*
 function handleScroll() {
 	if (getScrollTop() > 375) {
 		var newWidth = $(".parameters").outerWidth() + "px";
@@ -264,3 +274,4 @@ $(window).scroll(function() {
 	}
 	scrollTimer = setTimeout(handleScroll(), 1000);
 })
+*/
