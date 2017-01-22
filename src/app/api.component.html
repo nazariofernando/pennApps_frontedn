@@ -1,0 +1,38 @@
+<div class="container">
+	<div class="row">
+		<div class="col s2"></div>
+		<div class="documentation col s8">
+			<h3>Documentation</h3>
+			<h4>Easy as 1, 2, 3</h4>
+			<h5>Our API was built so that anyone can use the power of genetic algorithms and (in the near future) machine learning</h5>
+			<h5>The first step is to subscribe on our site:</h5>
+			<a href="/login" class="waves-effect waves-light btn">Sign Up</a>
+			<h5>If you are logged in, your email should appear here:</h5><h5>{{currentUser.email}}</h5>
+			<div *ngIf="(af.auth | async)?.uid">
+				<h5>Now that you are all set, let's begin.</h5>
+				<h5>First, include in your code a JSON object with the following structure: </h5>
+				<h5>{{ jsonExample | json }}</h5>
+				<br>
+				<h5>email is the email you used to log in</h5>
+				<h5>gen is the number (an integer) of generations you want to create</h5>
+				<h5>ind is the number (an integer) of individuals you want to have per generation</h5>
+				<h5>params are the variables you have in your model (and their initial values) that are going to mutate</h5>
+				<h5>percentages is by how much you want to mutate your variables</h5>
+				<h5>min and max are the minimun and maximun values for each param (if there are none, just leave them 0)</h5>
+				<h5>evaluation is the equation which evaluates how good is an individual, according to your model. It must be a string (that is, inside the quotation marks) and it must the model's variables as params['variableX']. It accepts any function and value from javascript Math library</h5>
+				<h5>State is the direction you want us to follow. If it is the boolean value true, the algorithm will work so that increases the evaluation. If it is false, it will decrease the evaluation</h5>
+				<h5>After you create your json object you call a http post request on the following address: https://darwindesignsapi.herokuapp.com/api, and send your json data</h5>
+				<button class="waves-effect waves-light btn" (click)="getAData()">Click here to see your data</button>
+				<div>
+					<h5 *ngFor = "let i in currentGen">Generation: {{i}}
+					</h5>
+					<button (click) ="getEData(i,j)" class="waves-effect waves-light btn" *ngFor ="let j in currentInd">Individual: {{j}}</button>
+				</div>
+				<div>
+					{{current | json }}
+				</div>
+			</div>
+		</div>
+		<div class="col s2"></div>
+	</div>
+</div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { AngularFire, FirebaseListObservable, FirebaseAuth ,FirebaseObjectObservable } from 'angularfire2';
 
 @Component({
 	selector: 'admin',
@@ -8,6 +8,5 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
 })
 export class AdminComponent {
 
-	
 
 }

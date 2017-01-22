@@ -5,7 +5,10 @@ import { FormsModule }        from '@angular/forms';
 import { HttpModule }         from '@angular/http';
 import { MaterialModule }     from '@angular/material';
 import { RouterModule }       from '@angular/router';
-import { AngularFireModule}   from 'angularfire2';
+import { AngularFireModule, 
+         AuthProviders, 
+         AuthMethods }        from 'angularfire2';
+
 
 //Custon Modules
 import { AppRoutingModule }   from './app-routing.module';
@@ -20,6 +23,7 @@ import { ContactUsComponent }     from './contact-us.component';
 import { LoginComponent }         from './login.component';
 import { OptimizerComponent }     from './optimizer.component';
 import { EvolutionComponent }     from './evolution.component';
+import { ApiTestComponent }       from './api.component';
 
 //Custom Services
 import { AlphaMorphService }  from './alpha-morphs.service';
@@ -32,6 +36,11 @@ export const firebaseConfig = {
   messagingSenderId: "499882485459"
 };
 
+const myFirebaseAuthConfig = {
+  provider: AuthProviders.Password,
+  method: AuthMethods.Password
+};
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +51,8 @@ export const firebaseConfig = {
     ContactUsComponent,
     LoginComponent,
     OptimizerComponent,
-    EvolutionComponent
+    EvolutionComponent,
+    ApiTestComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +60,7 @@ export const firebaseConfig = {
     HttpModule,
     MaterialModule.forRoot(),
     AppRoutingModule,
-    AngularFireModule.initializeApp(firebaseConfig)
+    AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
   ],
   providers: [AlphaMorphService],
   bootstrap: [AppComponent]

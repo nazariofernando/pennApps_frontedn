@@ -81,10 +81,11 @@ export class OptimizerComponent {
 		this.af.database.list('/optimizer/' + name, { preserveSnapshot: true })
 			.subscribe(snapshots => {
 				snapshots.forEach(snapshot => {
-					this.currentSet.push(snapshot.val())
+					this.currentSet.push([snapshot.key, snapshot.val()])
 				})
 			})
 
+		console.log(this.currentSet)
 	}
 
 }

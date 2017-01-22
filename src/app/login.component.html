@@ -1,1 +1,28 @@
-{{title}}
+<div class="container">
+	<div class="login-form row">
+		<div class="col s4"></div>
+		<form class="col s4">
+			<div class="row">
+				<div class="input-field col s12">
+					<input type="email" name="email" id="email" class="validate" [(ngModel)] = "user.email" >
+					<label class="active" for="email">Email</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<input type="password" name="password" id="password" class="validate" [(ngModel)] = "user.password">
+					<label class="active" for="password">Password</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col s6 container">
+					<button (click)="logIn()" class="waves-effect waves-light btn">Sign In</button>
+				</div>
+				<div class="col s6 container">
+					<button (click)="createNewUser()" class="waves-effect waves-light btn">Sign Up</button>
+				</div>
+			</div>
+		</form>
+		<div class="col s4"></div>
+	</div>	
+</div>
